@@ -1,0 +1,5 @@
+*.class
+target/classes/META-INF/maven/kr.or.connect/spring-practice/pom.properties
+target/classes/META-INF/MANIFEST.MF
+target/classes/application.properties
+target/classes/META-INF/maven/kr.or.connect/spring-practice/pom.xml
