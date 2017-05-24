@@ -23,6 +23,18 @@ public class BookDao {
 
 	private static final String COUNT_BOOK = "SELECT COUNT(*) FROM book";
 	private static final String SELECT_BY_ID = "SELECT id, title, author, pages FROM book where id = :id";
+	static final String DELETE_BY_ID = "DELETE FROM book WHERE id= :id";
+	private static final String UPDATE =
+			"UPDATE book SET\n"
+			+ "title = :title,"
+			+ "author = :author,"
+			+ "pages = :pages\n"
+			+ "WHERE id = :id";
+
+	public int update(Book book) {
+		SqlParameterSource params = new BeanPropertySqlParameterSource(book);
+		return jdbc.update(UPDATE, params);
+	}
 	
 	public int countBooks() {
 		Map<String, Object> params = Collections.emptyMap();
@@ -40,6 +52,11 @@ public class BookDao {
 	public Integer insert(Book book) {
 		SqlParameterSource params = new BeanPropertySqlParameterSource(book);
 		return insertAction.executeAndReturnKey(params).intValue();
+	}
+	
+	public int deleteById(Integer id) {
+		Map<String, ?> params = Collections.singletonMap("id", id);
+		return jdbc.update(DELETE_BY_ID, params);
 	}
 
 	public BookDao(DataSource dataSource) {
